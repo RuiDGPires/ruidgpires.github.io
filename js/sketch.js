@@ -5,19 +5,15 @@ let show_cursor = true;
 let cursor_index = 0;
 let cursor_interval;
 
-let info_color;
-let dir_color;
-let command_color;
-let default_color;
-
-let info_str = "RuiPires$";
+let info_str;
 let command_str = "";
-let history = [ [],[],[],[],[],[],[],["└────────────────────────────────────────────────────────────┘"], ["│Nothing is implemented yet but you can have a look around :)│"], ["|Welcome to my personal page!                                |"], ["┌────────────────────────────────────────────────────────────┐"]];
+let history = [];
 
 let font_regular;
 let font_italic;
 let font_bold;
 
+let path_index;
 let shell = new Shell();
 
 function preload(){
@@ -50,13 +46,17 @@ function takeChar(left = true){
 }
 
 function println(txt){
+    if (typeof txt == "string")
+        txt = [txt]
+
     if (history.length >= max_history)
         history.pop();
     history.unshift(txt);
 }
 
 function executeCommand(){
-    println([info_color, info_str, command_color, command_str]);
+    let str = info_str.concat([command_str])
+    println(str);
 
     shell.execute(command_str);
     command_str = "";
@@ -64,11 +64,35 @@ function executeCommand(){
 }
 
 function setup() {
+    println([]); 
+    println([]); 
+    println([]); 
+    println(["  ██████╗ ██╗   ██╗██╗    ██████╗ ██╗██████╗ ███████╗███████╗"]);
+    println(["  ██╔══██╗██║   ██║██║    ██╔══██╗██║██╔══██╗██╔════╝██╔════╝"]); 
+    println(["  ██████╔╝██║   ██║██║    ██████╔╝██║██████╔╝█████╗  ███████╗"]);
+    println(["  ██╔══██╗██║   ██║██║    ██╔═══╝ ██║██╔══██╗██╔══╝  ╚════██║"]);
+    println(["  ██║  ██║╚██████╔╝██║    ██║     ██║██║  ██║███████╗███████║"]);
+    println(["  ╚═╝  ╚═╝ ╚═════╝ ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝"]);
+    println([]); 
+    println(["┌────────────────────────────────────────────────────────────┐"]); 
+    println(["|Welcome to my personal page!                                |"]); 
+    println(["│Nothing is implemented yet but you can have a look around :)│"]); 
+    println(["└────────────────────────────────────────────────────────────┘"]);
+    println([]);
+    println([]);
+    println([]);
+    println([]);
+    println([]);
+    println([]);
+    println([]);
+    println([]);
+
     createCanvas(innerWidth, innerHeight);
-    info_color = color(0, 200, 10);
-    default_color = color(200, 200, 200);
-    dir_color = color(0, 70, 255);
-    command_color = default_color;
+    setup_colors();
+
+
+    path_index = 5;
+    info_str = [info_color, "RuiPires", default_color, "@", dir_color, shell.fs.pathToString(shell.current_dir), default_color, "$"];
 
     loopCursor();
 }
@@ -94,7 +118,22 @@ function keyPressed() {
         return false;
     } else if (keyCode === ENTER) {
         executeCommand();
+        info_str[path_index] = shell.fs.pathToString(shell.current_dir);
         loopCursor();
+        return false;
+    } else if (keyCode == TAB) {
+        if (command_str[command_str.length-1] == " ") return false;
+        
+        let words = command_str.split(" ")
+        let current_word = words[words.length - 1];
+        
+        let auto = shell.autocomplete(current_word);
+        
+        if (auto != ""){
+            command_str = command_str.slice(0, command_str.length-current_word.length) + auto;
+            cursor_index = command_str.length;
+        }
+
         return false;
     }
 
@@ -159,11 +198,15 @@ function draw_text(x, y){
     textSize(text_size);
     textFont(font_regular);
 
-    let width  = textWidth(info_str);
+    let width = 0;
 
-    render_text([info_color, info_str], x, y);
-    command_text(command_str, x + width, y);
-    draw_history(x, y - text_size);
+    info_str.filter(node => typeof node === "string").forEach(node => width += textWidth(node));
+
+    let input_y = y + (history.length + 1)*text_size;
+
+    render_text(info_str, x, input_y);
+    command_text(command_str, x + width, input_y);
+    draw_history(x, input_y - text_size);
 
     pop()
 }
@@ -173,10 +216,10 @@ function draw() {
 
     fill(0, 0, 0);
     let x = 20;
-    let y = 800;
+    let y = 100;
 
     let size_x = 10*innerWidth/17;
-    let size_y = text_size * (max_history + 1) + 10;
-    rect(x-5, y-size_y+10, size_x, size_y, 20);
+    let size_y = text_size * (max_history + 1.5) + 10;
+    rect(x-5, y-10, size_x, size_y, 20);
     draw_text(x, y);
 }
