@@ -1,17 +1,17 @@
 class FS {
     constructor(){
-        this.folders = { "type": "DIR", "contents": {
-            "home": { "type": "DIR", "contents": {
+        this.folders = { "type": "DIR", "files": {
+            "home": { "type": "DIR", "files": {
                 "a.txt": {"type": "FILE" },
                 "b.txt": {"type": "FILE" },
-                "projects": {"type": "DIR", "contents": {
-                        "snake" : {"type": "FILE" }
+                "projects": {"type": "DIR", "files": {
+                            "snake" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/Snake;"}
                             }
                         },
                     }
                 },
 
-            "bin": { "type": "DIR", "contents": {
+            "bin": { "type": "DIR", "files": {
                     }
                 }
             }
@@ -22,17 +22,20 @@ class FS {
 
     setupNodes(node = this.folders){
         let child;
-        node.contents["."] = node;
+        node.files["."] = node;
         if (node == this.folders) node.name = "";
 
-        for (child in node.contents){
+        for (child in node.files){
             if (child == "." || child == "..") continue;
-            let child_node = node.contents[child];
+            let child_node = node.files[child];
             child_node.name = child;
 
-            if (child_node.contents == undefined) child_node.contents = {};
+            if (typeof child_node.files == "undefined") child_node.files = {};
 
-            child_node.contents[".."] = node;
+            child_node.files[".."] = node;
+
+            if (typeof child_node.exe == "undefined")
+                child_node.exe = false;
             
             if (child_node.type == "DIR")
                 this.setupNodes(child_node);
@@ -44,9 +47,9 @@ class FS {
         let current_node = node;
         
         while(true){
-            if (!(".." in current_node.contents)) break;
+            if (!(".." in current_node.files)) break;
             path.unshift(current_node.name)
-            current_node = current_node.contents[".."];
+            current_node = current_node.files[".."];
         }
         return path; 
     }
@@ -58,16 +61,16 @@ class FS {
         if (str[0] == "/")
             working_dir = this.folders;
         else if (str.substring(0, 2) == "~/"){
-            working_dir = this.folders.contents["home"];
+            working_dir = this.folders.files["home"];
             str = str.substring(2);
         }
         
         let tmp_path = str.split("/");
         let ret = false;
         tmp_path.filter(node => node != "").forEach(node => {
-            if (!(node in working_dir.contents)) 
+            if (!(node in working_dir.files)) 
                 ret = true;
-            working_dir = working_dir.contents[node];
+            working_dir = working_dir.files[node];
         });
         
         if (ret) return null;
@@ -96,10 +99,11 @@ class FS {
     }
 
     getObj(path){
+        if (path == null) return null;
         let current_item = this.folders;
 
         for (let i = 0; i < path.length; i++){
-            current_item = current_item.contents[path[i]];
+            current_item = current_item.files[path[i]];
 
             if (typeof current_item == "undefined")
                 return null;

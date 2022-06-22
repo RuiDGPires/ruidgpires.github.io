@@ -136,7 +136,6 @@ function keyPressed() {
 
         return false;
     }
-
 }
 
 function keyTyped() {
