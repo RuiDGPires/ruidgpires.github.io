@@ -1,5 +1,5 @@
 const text_size = 30;
-const max_history = 22;
+const max_history = 29;
 
 let show_cursor = true;
 let cursor_index = 0;
@@ -67,25 +67,27 @@ function setup() {
     println([]); 
     println([]); 
     println([]); 
-    println(["  ██████╗ ██╗   ██╗██╗    ██████╗ ██╗██████╗ ███████╗███████╗"]);
-    println(["  ██╔══██╗██║   ██║██║    ██╔══██╗██║██╔══██╗██╔════╝██╔════╝"]); 
-    println(["  ██████╔╝██║   ██║██║    ██████╔╝██║██████╔╝█████╗  ███████╗"]);
-    println(["  ██╔══██╗██║   ██║██║    ██╔═══╝ ██║██╔══██╗██╔══╝  ╚════██║"]);
-    println(["  ██║  ██║╚██████╔╝██║    ██║     ██║██║  ██║███████╗███████║"]);
-    println(["  ╚═╝  ╚═╝ ╚═════╝ ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝"]);
+    println(["                      ██████╗ ██╗   ██╗██╗    ██████╗ ██╗██████╗ ███████╗███████╗"]);
+    println(["                      ██╔══██╗██║   ██║██║    ██╔══██╗██║██╔══██╗██╔════╝██╔════╝"]); 
+    println(["                      ██████╔╝██║   ██║██║    ██████╔╝██║██████╔╝█████╗  ███████╗"]);
+    println(["                      ██╔══██╗██║   ██║██║    ██╔═══╝ ██║██╔══██╗██╔══╝  ╚════██║"]);
+    println(["                      ██║  ██║╚██████╔╝██║    ██║     ██║██║  ██║███████╗███████║"]);
+    println(["                      ╚═╝  ╚═╝ ╚═════╝ ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝"]);
     println([]); 
-    println(["┌────────────────────────────────────────────────────────────┐"]); 
-    println(["|Welcome to my personal page!                                |"]); 
-    println(["│Nothing is implemented yet but you can have a look around :)│"]); 
-    println(["└────────────────────────────────────────────────────────────┘"]);
-    println([]);
-    println([]);
-    println([]);
-    println([]);
-    println([]);
-    println([]);
-    println([]);
-    println([]);
+    println(["                    ┌────────────────────────────────────────────────────────────┐"]); 
+    println(["                    |Welcome to my personal page!                                |"]); 
+    println(["                    │I'ts kind of empty but you can have a look around :)        │"]); 
+    println(["                    └────────────────────────────────────────────────────────────┘"]);
+    println(["                    ┌──────────────────────────┬─────────────────────────────────┐"]); 
+    println(["                    | Some commands:           |                                 |"]); 
+    println(["                    |  - ls  : prints the files|                                 |"]); 
+    println(["                    |and folders in the current|You can check some of my projects|"]); 
+    println(["                    |directory                 |in the projects folder           |"]); 
+    println(["                    |                          |                                 |"]);
+    println(["                    |  - cd <path> : change the|                                 |"]); 
+    println(["                    │current directory         |                                 │"]); 
+    println(["                    └──────────────────────────┴─────────────────────────────────┘"]);
+    println([]); 
 
     createCanvas(innerWidth, innerHeight);
     setup_colors();
@@ -211,14 +213,13 @@ function draw_text(x, y){
 }
 
 function draw() {
-    background(50, 50, 60);
+    background(5, 0, 5);
 
     fill(0, 0, 0);
     let x = 20;
-    let y = 100;
+    let y = 10;
 
     let size_x = 10*innerWidth/17;
     let size_y = text_size * (max_history + 1.5) + 10;
-    rect(x-5, y-10, size_x, size_y, 20);
     draw_text(x, y);
 }
