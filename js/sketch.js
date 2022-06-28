@@ -64,15 +64,20 @@ function executeCommand(){
 }
 
 function setup() {
+    setup_colors();
+
     println([]); 
     println([]); 
-    println([]); 
-    println(["                      ██████╗ ██╗   ██╗██╗    ██████╗ ██╗██████╗ ███████╗███████╗"]);
-    println(["                      ██╔══██╗██║   ██║██║    ██╔══██╗██║██╔══██╗██╔════╝██╔════╝"]); 
-    println(["                      ██████╔╝██║   ██║██║    ██████╔╝██║██████╔╝█████╗  ███████╗"]);
-    println(["                      ██╔══██╗██║   ██║██║    ██╔═══╝ ██║██╔══██╗██╔══╝  ╚════██║"]);
-    println(["                      ██║  ██║╚██████╔╝██║    ██║     ██║██║  ██║███████╗███████║"]);
-    println(["                      ╚═╝  ╚═╝ ╚═════╝ ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝"]);
+    println(["                  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓"]);
+    println(["                  ╏                                                                ╏"]);
+    println(["                  ╏   ██████╗ ██╗   ██╗██╗    ██████╗ ██╗██████╗ ███████╗███████╗  ╏"]);
+    println(["                  ╏   ██╔══██╗██║   ██║██║    ██╔══██╗██║██╔══██╗██╔════╝██╔════╝  ╏"]); 
+    println(["                  ╏   ██████╔╝██║   ██║██║    ██████╔╝██║██████╔╝█████╗  ███████╗  ╏"]);
+    println(["                  ╏   ██╔══██╗██║   ██║██║    ██╔═══╝ ██║██╔══██╗██╔══╝  ╚════██║  ╏"]);
+    println(["                  ╏   ██║  ██║╚██████╔╝██║    ██║     ██║██║  ██║███████╗███████║  ╏"]);
+    println(["                  ╏   ╚═╝  ╚═╝ ╚═════╝ ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝  ╏"]);
+    println(["                  ╏                                                                ╏"]);
+    println(["                  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛"]);
     println([]); 
     println(["                    ┌────────────────────────────────────────────────────────────┐"]); 
     println(["                    |Welcome to my personal page!                                |"]); 
@@ -87,11 +92,12 @@ function setup() {
     println(["                    |  - cd <path> : change the|                                 |"]); 
     println(["                    │current directory         |                                 │"]); 
     println(["                    └──────────────────────────┴─────────────────────────────────┘"]);
+    println([]);
+    println([]); 
+    println([]); 
     println([]); 
 
     createCanvas(innerWidth, innerHeight);
-    setup_colors();
-
 
     path_index = 5;
     info_str = [info_color, "RuiPires", default_color, "@", dir_color, shell.fs.pathToString(shell.current_dir), default_color, "$"];
@@ -213,7 +219,7 @@ function draw_text(x, y){
 }
 
 function draw() {
-    background(5, 0, 5);
+    background(background_color);
 
     fill(0, 0, 0);
     let x = 20;
