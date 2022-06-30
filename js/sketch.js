@@ -222,7 +222,7 @@ function draw() {
     background(background_color);
 
     fill(0, 0, 0);
-    let x = 20;
+    let x = 10;
     let y = 10;
 
     let size_x = 10*innerWidth/17;

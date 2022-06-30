@@ -42,7 +42,7 @@ class Shell {
                 let working_dir;
 
                 if (typeof path == "undefined" || path == ""){
-                    this.current_dir = [];
+                    this.current_dir = ["home"];
                     return;
                 }
 
