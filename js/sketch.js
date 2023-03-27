@@ -63,9 +63,7 @@ function executeCommand(){
     cursor_index = 0;
 }
 
-function setup() {
-    setup_colors();
-
+function show_entry_screen() {
     println([]); 
     println([]); 
     println(["                  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓"]);
@@ -96,6 +94,11 @@ function setup() {
     println([]); 
     println([]); 
     println([]); 
+}
+
+function setup() {
+    setup_colors();
+    //show_entry_screen();
 
     createCanvas(innerWidth, innerHeight);
 

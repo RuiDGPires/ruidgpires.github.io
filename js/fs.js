@@ -2,10 +2,18 @@ class FS {
     constructor(){
         this.folders = { "type": "DIR", "files": {
             "home": { "type": "DIR", "files": {
-                "a.txt": {"type": "FILE" },
-                "b.txt": {"type": "FILE" },
                 "projects": {"type": "DIR", "files": {
-                            "snake" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/Snake;"}
+                    "personal": {"type": "DIR", "files": {
+                                "Snake" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/Snake;"},
+                                "CrimVM" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/crimvm;"},
+                                "CrimLang" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/crimlang;"},
+                                "GBC-Emulator" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/rge;"},
+                                "Minesweeper" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/minesweeper;"},
+                                }},
+                    "academic": {"type": "DIR", "files": {
+                                "Computer-Networks" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/projeto-rc;"},
+                                "Aplications-and-Computation-for-the-Internet-of-Things" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/roundabout-traffic-lights;"},
+                                }},
                             }
                         },
                     }

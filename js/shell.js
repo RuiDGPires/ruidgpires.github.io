@@ -1,3 +1,18 @@
+function commonSubStr(arr) {
+    let str = "";
+
+    if (arr.length == 0) return "";
+
+    for (let c = 0; c < arr[0].length; c++) {
+        let current = arr[0][c];
+        for (let i = 1; i < arr.length; i++) {
+            if (arr[i][c] !== current) return str;
+        }
+        str += current;
+    }
+    return str;
+}
+
 class Shell {
     constructor(){
         this.fs = new FS();
@@ -131,10 +146,10 @@ class Shell {
             }else return "";
         }
 
-        if (files_lst.length == 1){
+        if (files_lst.length >= 1){
             let ret = str;
-            ret += files_lst[0];
-            if (folder.files[files_lst[0]].type == "DIR"){
+            ret += commonSubStr(files_lst);
+            if (folder.files[files_lst[0]].type == "DIR" && ret[ret.length - 1] != "/"){
                 ret += "/";
             }
             return ret;
