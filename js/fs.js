@@ -1,18 +1,23 @@
+function turlProject(project_name) {
+    return "#!\n\
+            turl https://github.com/RuiDGPires/" + project_name;
+}
+
 class FS {
     constructor(){
         this.folders = { "type": "DIR", "files": {
             "home": { "type": "DIR", "files": {
                 "projects": {"type": "DIR", "files": {
                     "personal": {"type": "DIR", "files": {
-                                "Snake" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/Snake;"},
-                                "CrimVM" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/crimvm;"},
-                                "CrimLang" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/crimlang;"},
-                                "GBC-Emulator" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/rge;"},
-                                "Minesweeper" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/minesweeper;"},
+                                "Snake" : {"type": "FILE", "exe": true, "content": turlProject("snake")},
+                                "CrimVM" : {"type": "FILE", "exe": true, "content": turlProject("crimvm")},
+                                "CrimLang" : {"type": "FILE", "exe": true, "content": turlProject("crimlang")},
+                                "GBC-Emulator" : {"type": "FILE", "exe": true, "content": turlProject("rge")},
+                                "Minesweeper" : {"type": "FILE", "exe": true, "content": turlProject("minesweeper")},
                                 }},
                     "academic": {"type": "DIR", "files": {
-                                "Computer-Networks" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/projeto-rc;"},
-                                "Aplications-and-Computation-for-the-Internet-of-Things" : {"type": "FILE", "exe": true, "content": "url: https://github.com/RuiDGPires/roundabout-traffic-lights;"},
+                                "Computer-Networks" : {"type": "FILE", "exe": true, "content": turlProject("projeto-rc")},
+                                "Aplications-and-Computation-for-the-Internet-of-Things" : {"type": "FILE", "exe": true, "content": turlProject("roundabout-traffic-lights")},
                                 }},
                             }
                         },
@@ -20,6 +25,13 @@ class FS {
                 },
 
             "bin": { "type": "DIR", "files": {
+                    "turl" : {"type": "FILE", "exe": true, "content": 
+                            "#!js\n\
+    let url = $1;\n\
+    let tab = window.open(url, \"_blank\");\n\
+    if (tab)\n\
+        focus();"
+                        },
                     }
                 }
             }

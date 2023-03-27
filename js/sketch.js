@@ -98,7 +98,7 @@ function show_entry_screen() {
 
 function setup() {
     setup_colors();
-    //show_entry_screen();
+    show_entry_screen();
 
     createCanvas(innerWidth, innerHeight);
 

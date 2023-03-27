@@ -13,6 +13,12 @@ function commonSubStr(arr) {
     return str;
 }
 
+function evalLine(line, args) {
+
+    console.log(new_line);
+    eval(new_line);
+}
+
 class Shell {
     constructor(){
         this.fs = new FS();
@@ -69,6 +75,22 @@ class Shell {
                 }
             },
 
+            "cat": (args = []) => {
+                let path = args[0];
+                if (typeof path == "undefined" || path == "") 
+                    return;
+
+                let tmp = this.fs.strToPath(path, this.fs.getObj(this.current_dir));
+                if (tmp == null || this.fs.getObj(tmp).type != "FILE") {
+                    println("\"" + path + "\" is not a file");
+                } else {
+                    let content = this.fs.getObj(tmp).content.split("\n");
+                    for (let i = 0; i < content.length; i++) {
+                        println(content[i]);
+                    }
+                }
+            },
+
             "exit": () => {close()},
 
             "": () => {},
@@ -80,9 +102,10 @@ class Shell {
     execute(str){
         let lst = str.split(" ");
         let command = lst[0];
+        let args = lst.splice(1);
 
         if (command in this.commands)
-            this.commands[command](lst.splice(1));
+            this.commands[command](args);
         else{
             let objs = [this.fs.getObj(this.fs.strToPath(command, this.fs.getObj(this.current_dir)))];
 
@@ -95,24 +118,28 @@ class Shell {
             if (objs.length == 0)
                 println(["", "Unkown Command: \"" + command + "\""]);
             else
-                this.exe_file(objs[0]);
+                this.exe_file(objs[0], args);
         }
     } 
 
-    exe_file(obj){
+    exe_file(obj, args){
         //TMP
-        console.log(obj);
         let str = obj.content;
 
         if (typeof str != "string")
             return;
+        let contents = str.split("\n");
+        if (contents[0] === "#!"){
+            for (let i = 1; i < contents.length; i++) {
+                console.log(contents[i].trim());
+                this.execute(contents[i].trim());
+            }
+        } else if (contents[0] === "#!js") {
+            let src = contents.splice(1).join("\n").trim().replace(/\$\d+/g, (match) => "_args[" + (int(match.slice(1)) - 1) + "]");
 
-        console.log(str);
-        if (str.match("url: .*;")){
-            let url = str.substring(5, str.length -1);
-            let tab = window.open(url, "_blank");
-            if (tab)
-                focus();
+            var wrap = s => "return (_args) => {" + s  + "}";
+
+            (new Function(wrap(src))).call(null).call(null, args);
         }
 
     }
@@ -143,6 +170,9 @@ class Shell {
                 files_lst = Object.keys(obj.files).filter(file => file != "." && file != "..");
 
                 folder = obj;
+                if (str[str.length - 1] != "/")
+                    str += "/";
+
             }else return "";
         }
 
